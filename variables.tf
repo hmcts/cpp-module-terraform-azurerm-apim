@@ -95,6 +95,12 @@ variable "portal_hostname_configuration" {
   default     = []
 }
 
+variable "gateway_hostname_configuration" {
+  type        = list(map(string))
+  description = "gateway hostname configurations"
+  default     = []
+}
+
 variable "developer_portal_hostname_configuration" {
   type        = list(map(string))
   description = "Developer portal hostname configurations"
@@ -200,14 +206,64 @@ variable "named_values" {
   default     = []
 }
 
-variable "products" {
-  description = "List of products to create"
-  type        = list(string)
+variable "apim_subscriptions" {
+  type = set(object({
+    user_id               = string
+    display_name          = string
+    product_id            = string
+  }))
   default     = []
+  description = "APIM Users"
 }
 
-variable "create_product_group_and_relationships" {
-  description = "Create local APIM groups with name identical to products and create a relationship between groups and products"
-  type        = bool
-  default     = false
+variable "apim_users" {
+  type = set(object({
+    user_id               = string
+    first_name            = string
+    last_name             = string
+    email                 = string
+  }))
+  default     = []
+  description = "APIM Users"
+}
+
+variable "apim_groups" {
+  type = set(object({
+    display_name  = string
+    name          = string
+    description   = string
+  }))
+  default     = []
+  description = "APIM Groups"
+}
+
+variable "apim_group_users" {
+  type = set(object({
+    user_id     = string
+    group_name  = string
+  }))
+  default     = []
+  description = "APIM Users to assign to Groups"
+}
+
+variable "apim_product" {
+  type = set(object({
+    description           = string
+    product_id            = string
+    display_name          = string
+    approval_required     = bool
+    published             = bool
+    subscription_required = bool
+  }))
+  default     = []
+  description = "APIM Product"
+}
+
+variable "apim_product_group" {
+  type = set(object({
+    product_id  = string
+    group_name  = string
+  }))
+  default     = []
+  description = "APIM Groups to assign to Products"
 }
