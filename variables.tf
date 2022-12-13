@@ -208,9 +208,9 @@ variable "named_values" {
 
 variable "apim_subscriptions" {
   type = set(object({
-    user_id               = string
-    display_name          = string
-    product_id            = string
+    user_id      = string
+    display_name = string
+    product_id   = string
   }))
   default     = []
   description = "APIM Users"
@@ -218,10 +218,10 @@ variable "apim_subscriptions" {
 
 variable "apim_users" {
   type = set(object({
-    user_id               = string
-    first_name            = string
-    last_name             = string
-    email                 = string
+    user_id    = string
+    first_name = string
+    last_name  = string
+    email      = string
   }))
   default     = []
   description = "APIM Users"
@@ -229,9 +229,9 @@ variable "apim_users" {
 
 variable "apim_groups" {
   type = set(object({
-    display_name  = string
-    name          = string
-    description   = string
+    display_name = string
+    name         = string
+    description  = string
   }))
   default     = []
   description = "APIM Groups"
@@ -239,8 +239,8 @@ variable "apim_groups" {
 
 variable "apim_group_users" {
   type = set(object({
-    user_id     = string
-    group_name  = string
+    user_id    = string
+    group_name = string
   }))
   default     = []
   description = "APIM Users to assign to Groups"
@@ -261,8 +261,8 @@ variable "apim_product" {
 
 variable "apim_product_group" {
   type = set(object({
-    product_id  = string
-    group_name  = string
+    product_id = string
+    group_name = string
   }))
   default     = []
   description = "APIM Groups to assign to Products"

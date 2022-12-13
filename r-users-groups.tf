@@ -9,7 +9,7 @@ resource "azurerm_api_management_user" "user" {
   state               = "active"
 }
 
-resource "azurerm_api_management_group" "group"{
+resource "azurerm_api_management_group" "group" {
   for_each            = { for apim_groups in var.apim_groups : apim_groups.name => apim_groups }
   api_management_name = azurerm_api_management.apim.name
   resource_group_name = var.resource_group_name

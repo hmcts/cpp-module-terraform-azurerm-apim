@@ -6,6 +6,5 @@ resource "azurerm_api_management_subscription" "apim" {
   product_id          = each.value.product_id
   display_name        = each.value.display_name
 
-  depends_on = [azurerm_api_management_user.user,azurerm_api_management_product.product]
+  depends_on = [azurerm_api_management_user.user, azurerm_api_management_product.product]
 }
-

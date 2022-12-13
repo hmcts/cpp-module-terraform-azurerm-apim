@@ -1,5 +1,5 @@
 resource "azurerm_api_management_custom_domain" "gateway" {
-  for_each = toset(var.gateway_hostname_configuration)
+  for_each          = toset(var.gateway_hostname_configuration)
   api_management_id = azurerm_api_management.apim.id
 
   gateway {
