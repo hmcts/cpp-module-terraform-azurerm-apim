@@ -271,9 +271,11 @@ variable "apim_product_group" {
 variable "vault_path" {
   type        = string
   description = "vault path for certificate"
+  default     = null
 }
 
 variable "vault_role" {
   type        = string
   description = "vault path for certificate"
+  default     = null
 }
