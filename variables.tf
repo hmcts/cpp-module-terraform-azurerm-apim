@@ -213,7 +213,7 @@ variable "apim_subscriptions" {
     product_id   = string
   }))
   default     = []
-  description = "APIM Users"
+  description = "APIM Sbscriptions"
 }
 
 variable "apim_users" {
@@ -266,4 +266,14 @@ variable "apim_product_group" {
   }))
   default     = []
   description = "APIM Groups to assign to Products"
+}
+
+variable "vault_path" {
+  type        = string
+  description = "vault path for certificate"
+}
+
+variable "vault_role" {
+  type        = string
+  description = "vault path for certificate"
 }
