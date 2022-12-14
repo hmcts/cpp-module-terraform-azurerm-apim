@@ -4,7 +4,7 @@ module "apim" {
   location    = var.location
   environment = var.environment
 
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = var.resource_group_name
 
   sku_name        = var.sku_name
   publisher_name  = var.publisher_name
