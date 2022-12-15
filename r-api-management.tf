@@ -43,24 +43,11 @@ resource "azurerm_api_management" "apim" {
 
   dynamic "hostname_configuration" {
     for_each = length(concat(
-      var.management_hostname_configuration,
       var.portal_hostname_configuration,
-      var.developer_portal_hostname_configuration,
       var.proxy_hostname_configuration,
     )) == 0 ? [] : ["fake"]
 
     content {
-      dynamic "management" {
-        for_each = var.management_hostname_configuration
-        content {
-          host_name                    = lookup(management.value, "host_name")
-          key_vault_id                 = lookup(management.value, "key_vault_id", null)
-          certificate                  = lookup(management.value, "certificate", null)
-          certificate_password         = lookup(management.value, "certificate_password", null)
-          negotiate_client_certificate = lookup(management.value, "negotiate_client_certificate", false)
-        }
-      }
-
       dynamic "portal" {
         for_each = var.portal_hostname_configuration
         content {
@@ -69,17 +56,6 @@ resource "azurerm_api_management" "apim" {
           certificate                  = lookup(portal.value, "certificate", null)
           certificate_password         = lookup(portal.value, "certificate_password", null)
           negotiate_client_certificate = lookup(portal.value, "negotiate_client_certificate", false)
-        }
-      }
-
-      dynamic "developer_portal" {
-        for_each = var.developer_portal_hostname_configuration
-        content {
-          host_name                    = lookup(developer_portal.value, "host_name")
-          key_vault_id                 = lookup(developer_portal.value, "key_vault_id", null)
-          certificate                  = lookup(developer_portal.value, "certificate", null)
-          certificate_password         = lookup(developer_portal.value, "certificate_password", null)
-          negotiate_client_certificate = lookup(developer_portal.value, "negotiate_client_certificate", false)
         }
       }
 
