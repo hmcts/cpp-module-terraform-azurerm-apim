@@ -11,5 +11,9 @@ terraform {
       source  = "hashicorp/vault"
       version = "=2.21.0"
     }
+    pkcs12 = {
+      source  = "chilicat/pkcs12"
+      version = ">= 0.0.7"
+    }
   }
 }
