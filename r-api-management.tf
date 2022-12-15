@@ -27,7 +27,7 @@ resource "azurerm_api_management" "apim" {
     for_each = var.certificate_configuration
     content {
       encoded_certificate  = lookup(certificate.value, "encoded_certificate")
-      certificate_password = lookup(certificate.value, "certificate_password")
+      certificate_password = lookup(certificate.value, "certificate_password", null)
       store_name           = lookup(certificate.value, "store_name")
     }
   }

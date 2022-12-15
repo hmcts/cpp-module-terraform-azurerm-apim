@@ -7,42 +7,46 @@ resource "vault_pki_secret_backend_cert" "app" {
 
 resource "pkcs12_from_pem" "my_pkcs12" {
   for_each        = { for gw in concat(var.gateway_hostname_configuration, var.management_hostname_configuration, var.developer_portal_hostname_configuration) : gw.host_name => gw }
-  password        = "mypassword"
+  password        = var.cert_password
   cert_pem        = vault_pki_secret_backend_cert.app[each.value.host_name].certificate
   private_key_pem = vault_pki_secret_backend_cert.app[each.value.host_name].private_key
   ca_pem          = vault_pki_secret_backend_cert.app[each.value.host_name].issuing_ca
 }
 
-#resource "azurerm_api_management_custom_domain" "gateway" {
-#  for_each          = { for gw in var.gateway_hostname_configuration : gw.host_name => gw }
-#  api_management_id = azurerm_api_management.apim.id
-#
-#  gateway {
-#    host_name                    = each.value.host_name
-#    certificate                  = vault_pki_secret_backend_cert.app[each.value.host_name].certificate
-#    negotiate_client_certificate = lookup(each.value, "negotiate_client_certificate", false)
-#    default_ssl_binding          = true
-#  }
-#}
-#
-#resource "azurerm_api_management_custom_domain" "mgmt" {
-#  for_each          = { for mgmt in var.management_hostname_configuration : mgmt.host_name => mgmt }
-#  api_management_id = azurerm_api_management.apim.id
-#
-#  management {
-#    host_name                    = each.value.host_name
-#    certificate                  = vault_pki_secret_backend_cert.app[each.value.host_name].certificate
-#    negotiate_client_certificate = lookup(each.value, "negotiate_client_certificate", false)
-#  }
-#}
-#
-#resource "azurerm_api_management_custom_domain" "dev_portal" {
-#  for_each          = { for dev in var.developer_portal_hostname_configuration : dev.host_name => dev }
-#  api_management_id = azurerm_api_management.apim.id
-#
-#  developer_portal {
-#    host_name                    = each.value.host_name
-#    certificate                  = vault_pki_secret_backend_cert.app[each.value.host_name].certificate
-#    negotiate_client_certificate = lookup(each.value, "negotiate_client_certificate", false)
-#  }
-#}
+resource "azurerm_api_management_custom_domain" "custom" {
+  count = length(concat(
+    var.developer_portal_hostname_configuration,
+    var.management_hostname_configuration,
+    var.gateway_hostname_configuration
+  )) == 0 ? 0 : 1
+  api_management_id = azurerm_api_management.apim.id
+
+  dynamic "developer_portal" {
+    for_each = var.developer_portal_hostname_configuration
+    content {
+      host_name                    = developer_portal.value.host_name
+      certificate                  = pkcs12_from_pem.my_pkcs12[developer_portal.value.host_name].result
+      certificate_password         = var.cert_password
+      negotiate_client_certificate = lookup(developer_portal.value, "negotiate_client_certificate", false)
+    }
+  }
+  dynamic "management" {
+    for_each = var.management_hostname_configuration
+    content {
+      host_name                    = management.value.host_name
+      certificate                  = pkcs12_from_pem.my_pkcs12[management.value.host_name].result
+      certificate_password         = var.cert_password
+      negotiate_client_certificate = lookup(management.value, "negotiate_client_certificate", false)
+    }
+  }
+  dynamic "gateway" {
+    for_each = var.gateway_hostname_configuration
+    content {
+      host_name                    = gateway.value.host_name
+      certificate                  = pkcs12_from_pem.my_pkcs12[gateway.value.host_name].result
+      certificate_password         = var.cert_password
+      negotiate_client_certificate = lookup(gateway.value, "negotiate_client_certificate", false)
+      default_ssl_binding          = true
+    }
+  }
+}

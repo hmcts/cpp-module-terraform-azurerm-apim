@@ -279,3 +279,9 @@ variable "vault_role" {
   description = "vault path for certificate"
   default     = null
 }
+
+variable "cert_password" {
+  type        = string
+  description = "vault path for certificate"
+  default     = "mypassword"
+}
