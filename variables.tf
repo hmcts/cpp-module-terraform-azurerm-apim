@@ -285,3 +285,15 @@ variable "cert_password" {
   description = "vault path for certificate"
   default     = "mypassword"
 }
+
+variable "external_certs" {
+  description = "A list of keyvault certificate secret name."
+  type        = list(string)
+  default     = []
+}
+
+variable "key_vault_id" {
+  type        = string
+  description = "key vault id for certs"
+  default     = null
+}
