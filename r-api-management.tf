@@ -1,3 +1,16 @@
+resource "azurerm_public_ip" "apim" {
+  name                = "${local.apim_name}-publicip"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  domain_name_label   = lower(local.apim_name)
+
+  tags = {
+    environment = var.environment
+  }
+}
+
 resource "azurerm_api_management" "apim" {
   name                = local.apim_name
   location            = var.location
@@ -22,6 +35,9 @@ resource "azurerm_api_management" "apim" {
       }
     }
   }
+
+
+  public_ip_address_id = azurerm_public_ip.apim.id
 
   dynamic "certificate" {
     for_each = var.certificate_configuration
