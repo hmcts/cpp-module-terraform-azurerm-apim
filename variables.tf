@@ -297,3 +297,11 @@ variable "key_vault_id" {
   description = "key vault id for certs"
   default     = null
 }
+
+variable "dns_zone" {
+  type = object({
+    name    = string
+    rg_name = string
+  })
+  description = "dns zone details"
+}
