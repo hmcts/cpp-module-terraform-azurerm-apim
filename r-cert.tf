@@ -10,7 +10,7 @@ data "azurerm_key_vault_certificate" "apim" {
   for_each     = toset(var.external_certs)
   name         = each.value
   key_vault_id = var.key_vault_id
-  depends_on = [azurerm_role_assignment.apim]
+  depends_on   = [azurerm_role_assignment.apim]
 }
 
 resource "azurerm_api_management_certificate" "external" {
