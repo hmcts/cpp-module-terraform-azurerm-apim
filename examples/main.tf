@@ -14,4 +14,5 @@ module "apim" {
   logs_destinations_ids = var.logs_destinations_ids
   custom_name           = var.apim_name
   zones                 = var.zones
+  dns_zone              = var.dns_zone
 }
