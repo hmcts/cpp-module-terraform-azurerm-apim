@@ -74,3 +74,11 @@ variable "zones" {
   description = "(Optional) Specifies a list of Availability Zones in which this API Management service should be located. Changing this forces a new API Management service to be created. Supported in Premium Tier."
   default     = []
 }
+
+variable "dns_zone" {
+  type = object({
+    name    = string
+    rg_name = string
+  })
+  description = "dns zone details"
+}
