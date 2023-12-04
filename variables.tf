@@ -268,24 +268,6 @@ variable "apim_product_group" {
   description = "APIM Groups to assign to Products"
 }
 
-variable "vault_path" {
-  type        = string
-  description = "vault path for certificate"
-  default     = null
-}
-
-variable "vault_role" {
-  type        = string
-  description = "vault path for certificate"
-  default     = null
-}
-
-variable "cert_password" {
-  type        = string
-  description = "vault path for certificate"
-  default     = "mypassword"
-}
-
 variable "external_certs" {
   description = "A list of keyvault certificate secret name."
   type        = list(string)
