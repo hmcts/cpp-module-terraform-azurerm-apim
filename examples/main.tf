@@ -10,9 +10,8 @@ module "apim" {
   publisher_name  = var.publisher_name
   publisher_email = var.publisher_email
 
-  named_values          = var.named_values
-  logs_destinations_ids = var.logs_destinations_ids
-  custom_name           = var.apim_name
-  zones                 = var.zones
-  dns_zone              = var.dns_zone
+  named_values = var.named_values
+  custom_name  = var.apim_name
+  zones        = var.zones
+  dns_zone     = var.dns_zone
 }
