@@ -44,10 +44,6 @@ module "apim" {
     },
   ]
 
-  logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
-  ]
 }
 ```
 
