@@ -103,14 +103,6 @@ resource "azurerm_api_management" "apim" {
 
   notification_sender_email = var.notification_sender_email
 
-  dynamic "policy" {
-    for_each = var.policy_configuration
-    content {
-      xml_content = lookup(policy.value, "xml_content", null)
-      xml_link    = lookup(policy.value, "xml_link", null)
-    }
-  }
-
   protocols {
     enable_http2 = var.enable_http2
   }
@@ -167,4 +159,11 @@ resource "azurerm_api_management" "apim" {
   tags = merge(local.default_tags, var.extra_tags)
 
   depends_on = [azurerm_network_security_rule.management_apim]
+}
+
+resource "azurerm_api_management_policy" "apim" {
+  for_each = var.policy_configuration
+
+  api_management_id = azurerm_api_management.apim.id
+  xml_content = lookup(policy.value, "xml_content", null)
 }

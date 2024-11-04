@@ -7,11 +7,10 @@ resource "azurerm_monitor_diagnostic_setting" "example" {
   eventhub_name                  = var.diagnostics[count.index].event_hub_name
   storage_account_id             = lookup(var.diagnostics[count.index], "storage_account_id", null)
 
-  dynamic "log" {
+  dynamic "enabled_log" {
     for_each = var.diagnostics[count.index].logs
     content {
       category = log.value.category
-      enabled  = log.value.enabled
     }
   }
 

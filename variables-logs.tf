@@ -6,7 +6,6 @@ variable "diagnostics" {
     name = string
     logs = list(object({
       category = string
-      enabled  = bool
     }))
     metrics = list(object({
       category = string
