@@ -5,9 +5,9 @@ variable "diagnostics" {
   type = list(object({
     name = string
     logs = list(object({
-      category = string
-      enabled  = bool
-      retention_policy_days = number
+      category                 = string
+      enabled                  = bool
+      retention_policy_days    = number
       retention_policy_enabled = bool
     }))
     metrics = list(object({
