@@ -12,6 +12,11 @@ resource "azurerm_monitor_diagnostic_setting" "example" {
     content {
       category = log.value.category
       enabled  = log.value.enabled
+
+      retention_policy {
+        days    = log.value.retention_policy_days
+        enabled = log.value.retention_policy_enabled
+      }
     }
   }
 
