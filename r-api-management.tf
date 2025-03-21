@@ -6,9 +6,7 @@ resource "azurerm_public_ip" "apim" {
   sku                 = "Standard"
   domain_name_label   = lower(local.apim_name)
 
-  tags = {
-    environment = var.environment
-  }
+  tags = merge(local.default_tags, var.extra_tags)
 }
 
 resource "azurerm_api_management" "apim" {
